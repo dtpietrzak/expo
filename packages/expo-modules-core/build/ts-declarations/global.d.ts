@@ -47,7 +47,7 @@ type ViewConfig = {
         registrationName: string;
     }>;
 };
-export interface ExpoProcessEnv {
+export type ExpoProcessEnv = {
     NODE_ENV: string;
     /** Used in `@expo/metro-runtime`. */
     EXPO_DEV_SERVER_ORIGIN?: string;
@@ -58,19 +58,16 @@ export interface ExpoProcessEnv {
     EXPO_BASE_URL?: string;
     /** Build-time representation of the `Platform.OS` value that the current JavaScript was bundled for. Does not support platform shaking wrapped require statements. */
     EXPO_OS?: string;
-    [key: string]: any;
-}
-export interface ExpoProcess {
+} & Record<string, any>;
+export type ExpoProcess = {
     env: ExpoProcessEnv;
-    [key: string]: any;
-}
+} & Record<string, any>;
 declare global {
     namespace NodeJS {
-        interface ProcessEnv extends ExpoProcessEnv {
-        }
-        interface Process extends ExpoProcess {
+        type ProcessEnv = ExpoProcessEnv;
+        type Process = ExpoProcess & {
             env: ProcessEnv;
-        }
+        };
     }
     /**
      * Global object containing all the native bindings installed by Expo.
